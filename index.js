@@ -6,6 +6,7 @@ const homeRoutes = require("./routes/homeRoutes");
 const productRoutes = require("./routes/productsRoutes");
 
 const app = express();
+app.use(bodyParser.json());
 
 app.listen(3000, function () {
   console.log("server is running !!");
@@ -17,4 +18,4 @@ mongoose
   .catch((error) => console.log(error));
 
 app.use("/", homeRoutes);
-app.use("/", productRoutes);
+app.use("/api/products", productRoutes);

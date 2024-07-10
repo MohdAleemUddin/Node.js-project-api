@@ -6,7 +6,8 @@ const productSchema = new schema({
   model: String,
   price: Number,
   description: String,
+  category: String,
   inStock: Boolean,
 });
 
-module.exports = mongoose.model('product', productSchema)
+module.exports = mongoose.model("product", productSchema);
