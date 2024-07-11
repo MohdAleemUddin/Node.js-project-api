@@ -21,6 +21,7 @@ const create = async (req, res) => {
   } catch (error) {
     res.status(500);
     res.send("internal server error!");
+    console.log(error);
   }
 };
 
