@@ -1,8 +1,13 @@
 const productModel = require("../model/productModel");
-const get = () => {
-  return productModel.find();
+const get = (page, pageSize) => {
+  return productModel
+    .find({})
+    .skip((page - 1) * pageSize)
+    .limit(pageSize);
 };
-
+let getCount = () => {
+  return productModel.countDocuments();
+};
 const getById = (id) => {
   return productModel.findOne({ _id: id });
 };
@@ -37,6 +42,7 @@ const remove = (id) => {
 module.exports = {
   get,
   getById,
+  getCount,
   create,
   update,
   patch,

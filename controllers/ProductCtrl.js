@@ -3,9 +3,19 @@ const productRepo = require("../repository/productRepo");
 
 const get = async (req, res) => {
   try {
-    let product = await productRepo.get();
+    let pageSize = +req.params.size || 10;
+    let page = +req.params.page;
+    let product = await productRepo.get(page, pageSize);
+    let totalRecords = await productRepo.getCount();
+    const response = {
+      metaData: {
+        totalRecords: totalRecords,
+        totalPages: Math.ceil(totalRecords / pageSize),
+      },
+      data: product,
+    };
     res.status(200);
-    res.send(product);
+    res.json(response);
   } catch (error) {
     res.status(500);
     res.send("internal server error");
