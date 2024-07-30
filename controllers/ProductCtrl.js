@@ -1,27 +1,46 @@
 const express = require("express");
 const productRepo = require("../repository/productRepo");
+const getOptions = (req) => {
+  let pageSize = +req.params.size || 10;
+  let page = +req.params.page;
+
+  let sort = req.query.sort;
+  let dir = req.query.dir || "";
+  if (!sort) {
+    sort = "updatedAt";
+    if (!dir) {
+      dir = "DESC";
+    }
+  }
+  return {
+    page,
+    pageSize,
+    sort,
+    dir,
+  };
+};
 
 const get = async (req, res) => {
   try {
-    let pageSize = +req.params.size || 10;
-    let page = +req.params.page;
+    // let pageSize = +req.params.size || 10;
+    // let page = +req.params.page;
 
-    let sort = req.query.sort;
-    let dir = req.query.dir || "";
-    if (!sort) {
-      sort = "updatedAt";
-      if (!dir) {
-        dir = "DESC";
-      }
-    }
-
-    let product = await productRepo.get(page, pageSize, sort, dir);
+    // let sort = req.query.sort;
+    // let dir = req.query.dir || "";
+    // if (!sort) {
+    //   sort = "updatedAt";
+    //   if (!dir) {
+    //     dir = "DESC";
+    //   }
+    // }
+    const options = getOptions(req);
+    let product = await productRepo.get(options);
     let totalRecords = await productRepo.getCount();
 
     const response = {
       metaData: {
         totalRecords: totalRecords,
-        totalPages: Math.ceil(totalRecords / pageSize),
+        totalPages: Math.ceil(totalRecords / options.pageSize),
       },
       data: product,
     };

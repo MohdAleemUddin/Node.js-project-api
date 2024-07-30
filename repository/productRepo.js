@@ -1,5 +1,6 @@
 const productModel = require("../model/productModel");
-const get = (page, pageSize, sort, dir) => {
+const get = (options) => {
+  const { page, pageSize, sort, dir } = options;
   let direction;
   switch (dir.toLowerCase()) {
     case "asc":
