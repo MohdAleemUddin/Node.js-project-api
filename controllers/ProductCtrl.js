@@ -5,8 +5,19 @@ const get = async (req, res) => {
   try {
     let pageSize = +req.params.size || 10;
     let page = +req.params.page;
-    let product = await productRepo.get(page, pageSize);
+
+    let sort = req.query.sort;
+    let dir = req.query.dir || "";
+    if (!sort) {
+      sort = "updatedAt";
+      if (!dir) {
+        dir = "DESC";
+      }
+    }
+
+    let product = await productRepo.get(page, pageSize, sort, dir);
     let totalRecords = await productRepo.getCount();
+
     const response = {
       metaData: {
         totalRecords: totalRecords,
