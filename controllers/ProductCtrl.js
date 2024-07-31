@@ -6,6 +6,7 @@ const getOptions = (req) => {
 
   let sort = req.query.sort;
   let dir = req.query.dir || "";
+  let search = req.query.search || "";
   if (!sort) {
     sort = "updatedAt";
     if (!dir) {
@@ -17,25 +18,15 @@ const getOptions = (req) => {
     pageSize,
     sort,
     dir,
+    search,
   };
 };
 
 const get = async (req, res) => {
   try {
-    // let pageSize = +req.params.size || 10;
-    // let page = +req.params.page;
-
-    // let sort = req.query.sort;
-    // let dir = req.query.dir || "";
-    // if (!sort) {
-    //   sort = "updatedAt";
-    //   if (!dir) {
-    //     dir = "DESC";
-    //   }
-    // }
     const options = getOptions(req);
     let product = await productRepo.get(options);
-    let totalRecords = await productRepo.getCount();
+    let totalRecords = await productRepo.getCount(options);
 
     const response = {
       metaData: {
