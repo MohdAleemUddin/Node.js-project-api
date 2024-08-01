@@ -5,7 +5,6 @@ const get = (req, res) => {
 };
 
 const health = (req, res) => {
-  res.stauts(200);
   res.json({ status: "up" });
 };
 
