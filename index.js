@@ -10,6 +10,13 @@ const productRoutes = require("./routes/productsRoutes");
 
 const app = express();
 app.use(bodyParser.json());
+let dir = path.join(__dirname, "logs");
+if (!fs.existsSync(dir)) {
+  fs.mkdirSync(dir);
+  console.log("dir does not exist");
+} else {
+  console.log("dir exists");
+}
 const filePath = path.join(__dirname, "logs", "request.log");
 const stream = fs.createWriteStream(filePath, { flags: "a" });
 app.use(morgan("combined", { stream: stream }));
