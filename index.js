@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const fs = require("fs");
 const path = require("path");
+const logger = require('./utils/appLogger')
 
 const homeRoutes = require("./routes/homeRoutes");
 const productRoutes = require("./routes/productsRoutes");
