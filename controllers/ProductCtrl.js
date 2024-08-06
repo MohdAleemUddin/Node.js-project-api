@@ -1,6 +1,7 @@
 const express = require("express");
 const productRepo = require("../repository/productRepo");
 const logger = require("../utils/appLogger");
+const reviewRepo = require("../repository/reviewsRepo");
 const getOptions = (req) => {
   let pageSize = +req.params.size || 10;
   let page = +req.params.page;
@@ -62,8 +63,11 @@ const getById = async (req, res) => {
   try {
     let id = req.params.id;
     let product = await productRepo.getById(id);
+    let reviews = await reviewRepo.getReviewsByProductId(id);
+    let jsonProduct = product.toJSON();
+    jsonProduct.reviews = reviews;
     res.status(200);
-    res.send(product);
+    res.send(jsonProduct);
   } catch (error) {
     res.status(500);
     res.send("internal server error");
