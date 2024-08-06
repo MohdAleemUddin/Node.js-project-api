@@ -8,6 +8,7 @@ const logger = require("./utils/appLogger");
 
 const homeRoutes = require("./routes/homeRoutes");
 const productRoutes = require("./routes/productsRoutes");
+const reviewRoutes = require("./routes/reviewRoutes");
 
 const app = express();
 app.use(bodyParser.json());
@@ -20,7 +21,7 @@ const filePath = path.join(__dirname, "logs", "request.log");
 const stream = fs.createWriteStream(filePath, { flags: "a" });
 app.use(morgan("combined", { stream: stream }));
 
-logger.info("logger info")
+logger.info("logger info");
 app.listen(3000, function () {
   console.log("server is running !!");
 });
@@ -32,3 +33,4 @@ mongoose
 
 app.use("/", homeRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/reviews", reviewRoutes);

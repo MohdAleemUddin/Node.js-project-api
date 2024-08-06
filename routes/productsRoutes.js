@@ -1,6 +1,6 @@
 const express = require("express");
-const productCtrl = require("../controllers/ProductCtrl");
 const router = express.Router();
+const productCtrl = require("../controllers/ProductCtrl");
 
 router.get("/page/:page/size/:size", productCtrl.get);
 router.get("/", productCtrl.get);
