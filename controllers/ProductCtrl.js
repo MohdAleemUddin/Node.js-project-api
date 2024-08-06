@@ -1,5 +1,6 @@
 const express = require("express");
 const productRepo = require("../repository/productRepo");
+const logger = require("../utils/appLogger");
 const getOptions = (req) => {
   let pageSize = +req.params.size || 10;
   let page = +req.params.page;
@@ -23,6 +24,7 @@ const getOptions = (req) => {
 };
 
 const get = async (req, res) => {
+  logger.info("get request made");
   try {
     const options = getOptions(req);
     let product = await productRepo.get(options);

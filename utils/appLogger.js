@@ -1,4 +1,12 @@
-const Logger = require("bunyan");
 const bunyan = require("bunyan");
-let login = bunyan.createLogger({ name: "Aleem" });
-module.exports = Logger;
+const path = require("path");
+const filePath = path.join(__dirname, "..", "logs", "app.log");
+let logger = bunyan.createLogger({
+  name: "Aleem",
+  streams: [
+    {
+      path: filePath,
+    },
+  ],
+});
+module.exports = logger;
